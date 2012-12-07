@@ -55,6 +55,8 @@ public class SystemLogProbeWriter extends ProbeWriter {
             data.put("tag", tag);
             data.put("message", message);
             probe.setData(data.toString());
+            probe.withId().now();
+
             probe.write(this);
         } catch (RemoteException e) {
             // TODO Auto-generated catch block
