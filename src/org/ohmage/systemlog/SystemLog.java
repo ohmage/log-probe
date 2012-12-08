@@ -2,7 +2,6 @@
 package org.ohmage.systemlog;
 
 import android.app.Activity;
-import android.app.Application;
 import android.app.Service;
 import android.content.Context;
 import android.view.View;
@@ -16,7 +15,7 @@ import java.net.URI;
  * 
  * @author cketcham
  */
-public class SystemLog extends Application {
+public class SystemLog {
 
     /**
      * Used as the ON/OFF indicator for activity messages
