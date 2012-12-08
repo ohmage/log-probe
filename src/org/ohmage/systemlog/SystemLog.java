@@ -43,8 +43,8 @@ public class SystemLog extends Application {
     }
 
     public static SystemLogProbeWriter probeWriter;
-    private static boolean mLogAnalytics;
-    private static Loglevel mLogLevel;
+    protected static boolean mLogAnalytics;
+    protected static Loglevel mLogLevel;
 
     public SystemLog(boolean logAnalytics, String logLevel) {
         mLogAnalytics = logAnalytics;
