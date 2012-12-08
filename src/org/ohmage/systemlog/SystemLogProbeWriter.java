@@ -1,13 +1,16 @@
 
 package org.ohmage.systemlog;
 
+import android.app.Service;
 import android.content.Context;
 import android.os.RemoteException;
+import android.view.View;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.ohmage.probemanager.ProbeBuilder;
 import org.ohmage.probemanager.ProbeWriter;
+import org.ohmage.systemlog.SystemLog.Status;
 
 /**
  * This probe writer sends systemlog data
@@ -54,6 +57,97 @@ public class SystemLogProbeWriter extends ProbeWriter {
             data.put("level", level);
             data.put("tag", tag);
             data.put("message", message);
+            probe.setData(data.toString());
+            probe.withId().now();
+
+            probe.write(this);
+        } catch (RemoteException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    public void activity(Context activity, Status status) {
+        try {
+            ProbeBuilder probe = new ProbeBuilder(OBSERVER_ID, OBSERVER_VERSION);
+            probe.setStream(STREAM_ACTIVITY, STREAM_ACTIVITY_VERSION);
+
+            JSONObject data = new JSONObject();
+            data.put("activity", activity.getClass().getSimpleName());
+            data.put("status", status.name());
+            probe.setData(data.toString());
+            probe.withId().now();
+
+            probe.write(this);
+        } catch (RemoteException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    public void widget(View view, String name, String extra) {
+        widget(view.getId(), (name != null) ? name : view.getContentDescription().toString(), extra);
+    }
+
+    public void widget(int id, String name, String extra) {
+        try {
+            ProbeBuilder probe = new ProbeBuilder(OBSERVER_ID, OBSERVER_VERSION);
+            probe.setStream(STREAM_WIDGET, STREAM_WIDGET_VERSION);
+
+            JSONObject data = new JSONObject();
+            data.put("id", id);
+            data.put("name", name);
+            data.put("extra", extra);
+            probe.setData(data.toString());
+            probe.withId().now();
+
+            probe.write(this);
+        } catch (RemoteException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    public void service(Service service, Status status) {
+        try {
+            ProbeBuilder probe = new ProbeBuilder(OBSERVER_ID, OBSERVER_VERSION);
+            probe.setStream(STREAM_SERVICE, STREAM_SERVICE_VERSION);
+
+            JSONObject data = new JSONObject();
+            data.put("service", service.getClass().getSimpleName());
+            data.put("status", status.name());
+            probe.setData(data.toString());
+            probe.withId().now();
+
+            probe.write(this);
+        } catch (RemoteException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    public void network(Context context, String resource, String networkState, long length) {
+        try {
+            ProbeBuilder probe = new ProbeBuilder(OBSERVER_ID, OBSERVER_VERSION);
+            probe.setStream(STREAM_NETWORK, STREAM_NETWORK_VERSION);
+
+            JSONObject data = new JSONObject();
+            data.put("context", context.getClass().getSimpleName());
+            data.put("resource", resource);
+            data.put("networkState", networkState);
+            data.put("length", length);
             probe.setData(data.toString());
             probe.withId().now();
 
