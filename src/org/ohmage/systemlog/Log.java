@@ -3,6 +3,8 @@ package org.ohmage.systemlog;
 
 import org.ohmage.systemlog.SystemLog.Loglevel;
 
+import java.util.Locale;
+
 /**
  * Writes log messages
  * 
@@ -27,7 +29,7 @@ public class Log {
     private static void log(Loglevel loglevel, String tag, String message) {
         if (shouldLogMessage(loglevel)) {
             android.util.Log.d(tag, message);
-            SystemLog.probeWriter.log(loglevel.name().toLowerCase(), tag, message);
+            SystemLog.probeWriter.log(loglevel.name().toLowerCase(Locale.US), tag, message);
         }
     }
 
