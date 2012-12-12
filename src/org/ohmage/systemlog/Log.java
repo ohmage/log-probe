@@ -25,8 +25,10 @@ public class Log {
     }
 
     private static void log(Loglevel loglevel, String tag, String message) {
-        if (shouldLogMessage(loglevel))
+        if (shouldLogMessage(loglevel)) {
+            android.util.Log.d(tag, message);
             SystemLog.probeWriter.log(loglevel.name().toLowerCase(), tag, message);
+        }
     }
 
     public static void i(String tag, String message) {
