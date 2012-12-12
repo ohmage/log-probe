@@ -146,7 +146,7 @@ public class SystemLogProbeWriter extends ProbeWriter {
             JSONObject data = new JSONObject();
             data.put("context", context.getClass().getSimpleName());
             data.put("resource", resource);
-            data.put("networkState", networkState);
+            data.put("network_state", networkState);
             data.put("length", length);
             probe.setData(data.toString());
             probe.withId().now();
