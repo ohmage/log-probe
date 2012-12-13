@@ -1,7 +1,7 @@
 
-package org.ohmage.systemlog;
+package org.ohmage.logprobe;
 
-import org.ohmage.systemlog.SystemLog.Loglevel;
+import org.ohmage.logprobe.LogProbe.Loglevel;
 
 import java.util.Locale;
 
@@ -20,7 +20,7 @@ public class Log {
      */
     private static boolean shouldLogMessage(Loglevel logLevel) {
         try {
-            return logLevel.compareTo(SystemLog.logLevel) <= 0;
+            return logLevel.compareTo(LogProbe.logLevel) <= 0;
         } catch (IllegalArgumentException e) {
             return false;
         }
@@ -29,7 +29,7 @@ public class Log {
     private static void log(Loglevel loglevel, String tag, String message) {
         if (shouldLogMessage(loglevel)) {
             android.util.Log.d(tag, message);
-            SystemLog.probeWriter.log(loglevel.name().toLowerCase(Locale.US), tag, message);
+            LogProbe.probeWriter.log(loglevel.name().toLowerCase(Locale.US), tag, message);
         }
     }
 

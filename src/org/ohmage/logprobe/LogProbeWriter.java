@@ -1,5 +1,5 @@
 
-package org.ohmage.systemlog;
+package org.ohmage.logprobe;
 
 import android.app.Service;
 import android.content.Context;
@@ -8,18 +8,18 @@ import android.view.View;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.ohmage.logprobe.LogProbe.Status;
 import org.ohmage.probemanager.ProbeBuilder;
 import org.ohmage.probemanager.ProbeWriter;
-import org.ohmage.systemlog.SystemLog.Status;
 
 /**
  * This probe writer sends systemlog data
  * 
  * @author cketcham
  */
-public class SystemLogProbeWriter extends ProbeWriter {
+public class LogProbeWriter extends ProbeWriter {
 
-    private static final String OBSERVER_ID = "org.ohmage.SystemLog";
+    private static final String OBSERVER_ID = "org.ohmage.LogProbe";
     private static final int OBSERVER_VERSION = 1;
 
     private static final String STREAM_LOG = "log";
@@ -37,7 +37,7 @@ public class SystemLogProbeWriter extends ProbeWriter {
     private static final String STREAM_NETWORK = "network";
     private static final int STREAM_NETWORK_VERSION = 1;
 
-    public SystemLogProbeWriter(Context context) {
+    public LogProbeWriter(Context context) {
         super(context);
     }
 

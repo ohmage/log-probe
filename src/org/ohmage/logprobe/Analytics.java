@@ -1,5 +1,5 @@
 
-package org.ohmage.systemlog;
+package org.ohmage.logprobe;
 
 import android.app.Activity;
 import android.app.Service;
@@ -7,7 +7,7 @@ import android.content.Context;
 import android.view.View;
 
 import org.apache.http.client.methods.HttpPost;
-import org.ohmage.systemlog.SystemLog.Status;
+import org.ohmage.logprobe.LogProbe.Status;
 
 import java.net.URI;
 
@@ -27,8 +27,8 @@ public class Analytics {
      * @param status
      */
     public static void activity(Context activity, Status status) {
-        if (SystemLog.logAnalytics)
-            SystemLog.probeWriter.activity(activity, status);
+        if (LogProbe.logAnalytics)
+            LogProbe.probeWriter.activity(activity, status);
     }
 
     /**
@@ -39,8 +39,8 @@ public class Analytics {
      * @param extra extra info for widget
      */
     public static void widget(View view, String name, String extra) {
-        if (SystemLog.logAnalytics)
-            SystemLog.probeWriter.widget(view, name, extra);
+        if (LogProbe.logAnalytics)
+            LogProbe.probeWriter.widget(view, name, extra);
     }
 
     /**
@@ -49,7 +49,7 @@ public class Analytics {
      * @param view
      */
     public static void widget(View view) {
-        if (SystemLog.logAnalytics)
+        if (LogProbe.logAnalytics)
             widget(view, null, null);
     }
 
@@ -60,7 +60,7 @@ public class Analytics {
      * @param name
      */
     public static void widget(View view, String name) {
-        if (SystemLog.logAnalytics)
+        if (LogProbe.logAnalytics)
             widget(view, name, null);
     }
 
@@ -72,8 +72,8 @@ public class Analytics {
      * @param string
      */
     public static void widget(Context context, String name) {
-        if (SystemLog.logAnalytics)
-            SystemLog.probeWriter.widget(-1, name, null);
+        if (LogProbe.logAnalytics)
+            LogProbe.probeWriter.widget(-1, name, null);
     }
 
     /**
@@ -85,8 +85,8 @@ public class Analytics {
      * @param status
      */
     public static void service(Service service, Status status) {
-        if (SystemLog.logAnalytics)
-            SystemLog.probeWriter.service(service, status);
+        if (LogProbe.logAnalytics)
+            LogProbe.probeWriter.service(service, status);
     }
 
     /**
@@ -98,8 +98,8 @@ public class Analytics {
      * @param length
      */
     private static void network(Context context, String resource, String networkState, long length) {
-        if (SystemLog.logAnalytics)
-            SystemLog.probeWriter.network(context, resource, networkState, length);
+        if (LogProbe.logAnalytics)
+            LogProbe.probeWriter.network(context, resource, networkState, length);
     }
 
     /**
@@ -109,7 +109,7 @@ public class Analytics {
      * @param httpPost
      */
     public static void network(Context context, HttpPost httpPost) {
-        if (SystemLog.logAnalytics)
+        if (LogProbe.logAnalytics)
             network(context, httpPost.getURI().getPath(), "upload", httpPost.getEntity()
                     .getContentLength());
     }
@@ -122,7 +122,7 @@ public class Analytics {
      * @param length
      */
     public static void network(Context context, String url, long length) {
-        if (SystemLog.logAnalytics)
+        if (LogProbe.logAnalytics)
             network(context, URI.create(url).getPath(), "download", length);
     }
 }

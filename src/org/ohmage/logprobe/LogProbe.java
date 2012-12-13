@@ -1,5 +1,5 @@
 
-package org.ohmage.systemlog;
+package org.ohmage.logprobe;
 
 import android.content.Context;
 
@@ -8,7 +8,7 @@ import android.content.Context;
  * 
  * @author cketcham
  */
-public class SystemLog {
+public class LogProbe {
 
     /**
      * Used as the ON/OFF indicator for activity messages
@@ -34,17 +34,17 @@ public class SystemLog {
         VERBOSE
     }
 
-    public static SystemLogProbeWriter probeWriter;
+    public static LogProbeWriter probeWriter;
     public static boolean logAnalytics;
     public static Loglevel logLevel;
 
-    public SystemLog(boolean logAnalytics, String logLevel) {
-        SystemLog.logAnalytics = logAnalytics;
-        SystemLog.logLevel = Loglevel.valueOf(logLevel.toUpperCase());
+    public LogProbe(boolean logAnalytics, String logLevel) {
+        LogProbe.logAnalytics = logAnalytics;
+        LogProbe.logLevel = Loglevel.valueOf(logLevel.toUpperCase());
     }
 
     public void connect(Context context) {
-        probeWriter = new SystemLogProbeWriter(context);
+        probeWriter = new LogProbeWriter(context);
         probeWriter.connect();
     }
 
