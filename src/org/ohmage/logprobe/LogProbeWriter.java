@@ -92,17 +92,17 @@ public class LogProbeWriter extends ProbeWriter {
     }
 
     public void widget(View view, String name, String extra) {
-        widget(view.getId(), (name != null) ? name : view.getContentDescription().toString(), extra);
+        widget(view.getId(), (name != null) ? name : view.getContentDescription(), extra);
     }
 
-    public void widget(int id, String name, String extra) {
+    public void widget(int id, CharSequence name, String extra) {
         try {
             ProbeBuilder probe = new ProbeBuilder(OBSERVER_ID, OBSERVER_VERSION);
             probe.setStream(STREAM_WIDGET, STREAM_WIDGET_VERSION);
 
             JSONObject data = new JSONObject();
             data.put("id", id);
-            data.put("name", name);
+            data.put("name", (name != null) ? name : "None");
             data.put("extra", extra);
             probe.setData(data.toString());
             probe.withId().now();
