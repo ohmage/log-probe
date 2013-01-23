@@ -29,6 +29,8 @@ public class Log {
     private static void log(Loglevel loglevel, String tag, String message) {
         if (shouldLogMessage(loglevel)) {
             android.util.Log.d(tag, message);
+            if (LogProbe.probeWriter == null)
+                throw new RuntimeException("LogProbe must be connected");
             LogProbe.probeWriter.log(loglevel.name().toLowerCase(Locale.US), tag, message);
         }
     }
