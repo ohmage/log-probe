@@ -43,12 +43,8 @@ public class Log {
         log(Loglevel.DEBUG, tag, message);
     }
 
-    public static void e(String tag, String message, Exception e) {
-        log(Loglevel.ERROR, tag, message + e.getMessage());
-    }
-
     public static void e(String tag, String message, Throwable throwable) {
-        log(Loglevel.ERROR, tag, message + android.util.Log.getStackTraceString(throwable));
+        log(Loglevel.ERROR, tag, message + "\n" + android.util.Log.getStackTraceString(throwable));
     }
 
     public static void e(String tag, String message) {
