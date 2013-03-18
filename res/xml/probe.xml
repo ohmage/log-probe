@@ -1,0 +1,5 @@
+<probe xmlns:probe="http://schemas.android.com/apk/res-auto"
+    probe:observerId="org.ohmage.LogProbe"
+    probe:observerName="LogProbe"
+    probe:observerVersionCode="1"
+    probe:observerVersionName="1.0" />
