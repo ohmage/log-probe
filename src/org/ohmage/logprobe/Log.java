@@ -19,6 +19,9 @@ public class Log {
      * @return
      */
     private static boolean shouldLogMessage(Loglevel logLevel) {
+        if (LogProbe.logLevel == null)
+            throw new RuntimeException("logLevel must be set before writing log");
+
         try {
             return logLevel.compareTo(LogProbe.logLevel) <= 0;
         } catch (IllegalArgumentException e) {
