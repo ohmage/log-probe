@@ -4,6 +4,7 @@ package org.ohmage.logprobe;
 import android.app.Service;
 import android.content.Context;
 import android.os.RemoteException;
+import android.telephony.TelephonyManager;
 import android.view.View;
 
 import org.json.JSONException;
@@ -20,25 +21,30 @@ import org.ohmage.probemanager.ProbeWriter;
 public class LogProbeWriter extends ProbeWriter {
 
     private static final String OBSERVER_ID = "org.ohmage.LogProbe";
-    private static final int OBSERVER_VERSION = 1;
+    private static final int OBSERVER_VERSION = 2;
 
     private static final String STREAM_LOG = "log";
-    private static final int STREAM_LOG_VERSION = 1;
+    private static final int STREAM_LOG_VERSION = 2;
 
     private static final String STREAM_ACTIVITY = "activity";
-    private static final int STREAM_ACTIVITY_VERSION = 1;
+    private static final int STREAM_ACTIVITY_VERSION = 2;
 
     private static final String STREAM_WIDGET = "widget";
-    private static final int STREAM_WIDGET_VERSION = 1;
+    private static final int STREAM_WIDGET_VERSION = 2;
 
     private static final String STREAM_SERVICE = "service";
-    private static final int STREAM_SERVICE_VERSION = 1;
+    private static final int STREAM_SERVICE_VERSION = 2;
 
     private static final String STREAM_NETWORK = "network";
-    private static final int STREAM_NETWORK_VERSION = 1;
+    private static final int STREAM_NETWORK_VERSION = 2;
+
+    private TelephonyManager mTelephonyManager;
 
     public LogProbeWriter(Context context) {
         super(context);
+        if (LogProbe.logDeviceId)
+            mTelephonyManager = (TelephonyManager) this.mContext
+                    .getSystemService(Context.TELEPHONY_SERVICE);
     }
 
     /**
@@ -57,6 +63,7 @@ public class LogProbeWriter extends ProbeWriter {
             data.put("level", level);
             data.put("tag", tag);
             data.put("message", message);
+            addDeviceId(data);
             probe.setData(data.toString());
             probe.withId().now();
 
@@ -78,6 +85,7 @@ public class LogProbeWriter extends ProbeWriter {
             JSONObject data = new JSONObject();
             data.put("activity", activity.getClass().getSimpleName());
             data.put("status", status.name());
+            addDeviceId(data);
             probe.setData(data.toString());
             probe.withId().now();
 
@@ -104,6 +112,7 @@ public class LogProbeWriter extends ProbeWriter {
             data.put("id", id);
             data.put("name", (name != null) ? name : "None");
             data.put("extra", extra);
+            addDeviceId(data);
             probe.setData(data.toString());
             probe.withId().now();
 
@@ -125,6 +134,7 @@ public class LogProbeWriter extends ProbeWriter {
             JSONObject data = new JSONObject();
             data.put("service", service.getClass().getSimpleName());
             data.put("status", status.name());
+            addDeviceId(data);
             probe.setData(data.toString());
             probe.withId().now();
 
@@ -148,6 +158,7 @@ public class LogProbeWriter extends ProbeWriter {
             data.put("resource", resource);
             data.put("network_state", networkState);
             data.put("length", length);
+            addDeviceId(data);
             probe.setData(data.toString());
             probe.withId().now();
 
@@ -159,5 +170,10 @@ public class LogProbeWriter extends ProbeWriter {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+
+    public void addDeviceId(JSONObject data) throws JSONException {
+        if (mTelephonyManager != null)
+            data.put("device_id", mTelephonyManager.getDeviceId());
     }
 }

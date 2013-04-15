@@ -1,6 +1,7 @@
 
 package org.ohmage.logprobe;
 
+import android.Manifest.permission;
 import android.content.Context;
 
 import java.util.Collections;
@@ -36,6 +37,7 @@ public class LogProbe {
     public static LogProbeWriter probeWriter;
     public static boolean logAnalytics;
     public static Loglevel logLevel;
+    public static boolean logDeviceId = false;
     private static Set<Context> writers = Collections.synchronizedSet(new HashSet<Context>());
 
     /**
@@ -77,5 +79,15 @@ public class LogProbe {
     public static void setLevel(boolean logAnalytics, Loglevel logLevel) {
         LogProbe.logAnalytics = logAnalytics;
         LogProbe.logLevel = logLevel;
+    }
+
+    /**
+     * If the deviceId is logged, your application should hold the
+     * {@link permission#READ_PHONE_STATE} permission.
+     * 
+     * @param log
+     */
+    public static void setLogDeviceId(boolean log) {
+        logDeviceId = log;
     }
 }
